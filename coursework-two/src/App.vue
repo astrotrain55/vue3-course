@@ -1,9 +1,9 @@
 <template>
   <div class="container column">
-    <app-form @create="create"/>
-    <app-resume :list-blocks="listBlocks"/>
+    <app-form @create="create"></app-form>
+    <app-resume :list-blocks="listBlocks"></app-resume>
   </div>
-  <app-comments/>
+  <app-comments></app-comments>
 </template>
 
 <script>

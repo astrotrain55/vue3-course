@@ -8,7 +8,7 @@
       <h2>Комментарии</h2>
       <ul class="list">
         <li class="list-item" v-for="comment in list">
-          <app-comment :text="comment.body" :email="comment.email"/>
+          <app-comment :text="comment.body" :email="comment.email"></app-comment>
         </li>
       </ul>
     </div>
