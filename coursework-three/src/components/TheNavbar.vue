@@ -2,12 +2,22 @@
   <header class="navbar">
     <h3>Freelance</h3>
     <ul class="navbar-menu">
-      <li>
-        <a href="#">Все задачи</a>
-      </li>
-      <li>
-        <a href="#">Создать</a>
+      <li v-for="(name, route) in routes" :key="route">
+        <router-link :to="route">{{ name }}</router-link>
       </li>
     </ul>
   </header>
 </template>
+
+<script>
+export default {
+  setup() {
+    return {
+      routes: {
+        '/': 'Все задачи',
+        '/new': 'Создать',
+      }, // тут реактивность не нужна, потому что ничего не меняем
+    };
+  },
+};
+</script>
