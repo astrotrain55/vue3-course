@@ -21,6 +21,7 @@
 
 <script>
 import { defineAsyncComponent } from 'vue';
+import firebase from '@/firebase-db';
 
 export default {
   props: {
@@ -37,23 +38,36 @@ export default {
     },
   },
 
+  created() {
+    firebase.connect((blockList) => {
+      if (!blockList) return;
+
+      blockList.forEach((block) => {
+        this.$emit('create', {
+          content: block.name,
+          component: this.typesBlocks[block.key].component,
+        });
+      });
+    });
+  },
+
   data: () => ({
     typesBlocks: {
       title: {
         name: 'Заголовок',
-        component: defineAsyncComponent(() => import('./blocks/Title')),
+        component: defineAsyncComponent(() => import(/* webpackChunkName: "title" */ './blocks/Title')),
       },
       subtitle: {
         name: 'Подзаголовок',
-        component: defineAsyncComponent(() => import('./blocks/Subtitle')),
+        component: defineAsyncComponent(() => import(/* webpackChunkName: "subtitle" */ './blocks/Subtitle')),
       },
       avatar: {
         name: 'Аватар',
-        component: defineAsyncComponent(() => import('./blocks/Avatar')),
+        component: defineAsyncComponent(() => import(/* webpackChunkName: "avatar" */ './blocks/Avatar')),
       },
       text: {
         name: 'Текст',
-        component: defineAsyncComponent(() => import('./blocks/Text')),
+        component: defineAsyncComponent(() => import(/* webpackChunkName: "text" */ './blocks/Text')),
       },
     },
     currentType: 'title',
