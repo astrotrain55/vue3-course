@@ -5,7 +5,7 @@
     <p><strong>Дэдлайн</strong>: {{ task.date }}</p>
     <p><strong>Описание</strong>: {{ task.description }}</p>
     <div>
-      <button class="btn" @click="changeStatus('active')">Взять в работу</button>
+      <button class="btn" @click="changeStatus('pending')">Взять в работу</button>
       <button class="btn primary" @click="changeStatus('done')">Завершить</button>
       <button class="btn danger" @click="changeStatus('cancelled')">Отменить</button>
     </div>

@@ -1,24 +1,11 @@
+import storage from '@/tools/webStorage';
+
 export default {
   namespaced: true,
 
   state() {
     return {
-      tasksList: [
-        {
-          id: '1',
-          title: 'Ла-ла-ла',
-          description: 'Хорошо !!',
-          status: 'active',
-          date: new Date().toLocaleDateString(),
-        },
-        {
-          id: '2',
-          title: 'Тарам-пам-пам!',
-          description: 'Ыыы!',
-          status: 'done',
-          date: new Date().toLocaleDateString(),
-        },
-      ],
+      tasksList: storage.load || [],
 
       statusList: {
         active: 'Активен',
@@ -30,9 +17,7 @@ export default {
   },
 
   getters: {
-    activeTasksCount(state) {
-      return state.tasksList.filter((task) => task.status === 'active').length;
-    },
+    activeTasksCount: (state) => state.tasksList.filter((task) => task.status === 'active').length,
 
     task: (state) => (id) => state.tasksList.find((task) => task.id === id),
   },
@@ -47,8 +32,6 @@ export default {
         if (task.id === idTask) task.status = status;
         return task;
       });
-
-      console.log(state.tasksList);
     },
   },
 

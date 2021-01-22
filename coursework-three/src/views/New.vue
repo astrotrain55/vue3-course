@@ -16,33 +16,38 @@
       <textarea id="description" v-model="description"></textarea>
     </div>
 
-    <button class="btn primary">Создать</button>
+    <button class="btn primary" :disabled="disabled">Создать</button>
   </form>
 </template>
 
 <script>
-import { ref } from 'vue';
+import {computed, ref} from 'vue';
 import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
+import storage from '@/tools/webStorage';
 
 export default {
   setup() {
     const store = useStore();
+    const router = useRouter();
     const title = ref('');
     const date = ref('');
     const description = ref('');
+
+    const disabled = computed(() => [title, date, description].find((field) => !field.value));
 
     function setTask() {
       const newTask = {
         id: String(Date.now()),
         title: title.value,
-        date: date.value,
+        date: new Date(date.value).toLocaleDateString(),
         description: description.value,
-        status: 'active',
+        status: (+new Date(date.value) - +new Date(Date.now() - 86400000)) < 0 ? 'cancelled' : 'active',
       };
 
-      console.log(newTask);
-
       store.commit('tasks/setTask', newTask);
+      storage.save(store.state.tasks.tasksList);
+      router.push('/');
     }
 
     return {
@@ -50,6 +55,7 @@ export default {
       date,
       description,
       setTask,
+      disabled,
     };
   },
 };

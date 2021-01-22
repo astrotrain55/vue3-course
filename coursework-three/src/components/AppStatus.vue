@@ -3,6 +3,7 @@
 </template>
 
 <script>
+import { computed } from 'vue';
 import { useStore } from 'vuex';
 
 export default {
@@ -20,9 +21,8 @@ export default {
     };
 
     return {
-      type: props.type,
-      className: classList[props.type],
-      statusName: store.state.tasks.statusList[props.type],
+      className: computed(() => classList[props.type]),
+      statusName: computed(() => store.state.tasks.statusList[props.type]),
     };
   },
 };
